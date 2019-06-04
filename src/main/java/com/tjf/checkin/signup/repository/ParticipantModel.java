@@ -35,19 +35,10 @@ public class ParticipantModel {
     /** The email. */
     @NotBlank(message = "{ParticipantModel.email.NotBlank}")
     @Email(message = "{ParticipantModel.email.EmailBadFormed}")
-    @Column(unique = true)
     private String email;
 
-    /** The mac address. */
-    @NotBlank(message = "{ParticipantModel.macAddress.NotBlank}")
-    @Column(unique = true)
-    private String macAddress;
+    /** The Code of event. */
+    @NotBlank(message = "{ParticipantModel.code_event.NotBlank}")
+    private String code_event;
 
-    /** The name. */
-    @NotBlank(message = "{ParticipantModel.name.NotBlank}")
-    private String name;
-
-    /** The provider. */
-    @NotBlank(message = "{ParticipantModel.provider.NotBlank}")
-    private String provider;
 }

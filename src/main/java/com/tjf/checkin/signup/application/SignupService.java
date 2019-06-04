@@ -19,7 +19,8 @@ import com.tjf.checkin.signup.repository.ParticipantModel;
 import com.tjf.checkin.signup.repository.ParticipantRepository;
 
 /**
- * The Class SignupService responsible for performing the validations and adding the participants.
+ * The Class SignupService responsible for performing the validations and adding
+ * the participants.
  * 
  * @author Marcos Paulo dos Santos
  */
@@ -27,95 +28,65 @@ import com.tjf.checkin.signup.repository.ParticipantRepository;
 @Transactional
 public class SignupService {
 
-    /** The entity manager. */
-    @PersistenceContext
-    private EntityManager entityManager;
-    
-    /** The repository. */
-    @Autowired
-    private ParticipantRepository repository;
+	/** The entity manager. */
+	@PersistenceContext
+	private EntityManager entityManager;
 
-    /**
-     * Signup.
-     *
-     * @param participant the participant
-     * @return the participant model
-     */
-    public ParticipantModel signup(ParticipantModel participant) {        
-        validUniqueParticipant(participant);
-        return repository.save(participant);
-    }
-    
-    /**
-     * Valid unique participant.
-     *
-     * @param participant the participant
-     */
-    private void validUniqueParticipant (ParticipantModel participant) {        
-        if(existsParticipantByEmailOrMacAddress(participant.getEmail(), participant.getMacAddress()))
-            throw new ParticipantNonUniqueResultException();
-    }
-    
-    /**
-     * Exists participant by email or MacAddress.
-     *
-     * @param email the email
-     * @param macAddress the MacAddress
-     * @return true, if successful
-     */
-    private boolean existsParticipantByEmailOrMacAddress(String email, String macAddress) {
-        
-        boolean exists;
-        
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        TypedQuery<Boolean> typedQuery = createQueryByEmailOrMacAddress(criteriaBuilder, email, macAddress);
-        
-        try {
-            exists = typedQuery.getSingleResult();
-        } catch(NoResultException exception) {
-            exists = false;
-        } catch(NonUniqueResultException exception) {
-            exists = true;
-        }
-        
-        entityManager.close();
-        
-        return exists;
-    }
-    
-    /**
-     * Creates the query by email or MacAddress.
-     *
-     * @param criteriaBuilder the criteria builder
-     * @param email the email
-     * @param macAddress the MacAddress
-     * @return the typed query
-     */
-    private TypedQuery<Boolean> createQueryByEmailOrMacAddress(CriteriaBuilder criteriaBuilder, String email,
-            String macAddress) {
+	/** The repository. */
+	@Autowired
+	private ParticipantRepository repository;
 
-        CriteriaQuery<Boolean> query = criteriaBuilder.createQuery(Boolean.class);
-        query.select(criteriaBuilder.literal(true));
-        Root<ParticipantModel> participantRoot = query.from(ParticipantModel.class);
-        query.where(createPredicateByEmailOrMacAddress(criteriaBuilder, participantRoot, email, macAddress));
+	/**
+	 * Signup.
+	 *
+	 * @param participant the participant
+	 * @return the participant model
+	 */
+	public ParticipantModel signup(ParticipantModel participant) {
+		validUniqueParticipant(participant);
+		return repository.save(participant);
+	}
 
-        return entityManager.createQuery(query);
-    }
+	/**
+	 * Valid unique participant.
+	 *
+	 * @param participant the participant
+	 */
+	private void validUniqueParticipant(ParticipantModel participant) {
+		if (existsCheckinByEmailAndEvent(participant.getEmail(), participant.getCode_event()))
+			throw new ParticipantNonUniqueResultException();
+	}
 
-    /**
-     * Creates the predicate by email or MacAddress.
-     *
-     * @param criteriaBuilder the criteria builder
-     * @param participantRoot the participant root
-     * @param email the email
-     * @param macAddress the MacAddress
-     * @return the predicate
-     */
-    private Predicate createPredicateByEmailOrMacAddress(CriteriaBuilder criteriaBuilder,
-            Root<ParticipantModel> participantRoot, String email, String macAddress) {
-        
-        Predicate emailPredicate = criteriaBuilder.equal(participantRoot.get("email"), email);
-        Predicate macAddressPredicate = criteriaBuilder.equal(participantRoot.get("macAddress"), macAddress);
-        return criteriaBuilder.or(emailPredicate, macAddressPredicate);
-    }
+	/**
+	 * Exists participant by email and code_event.
+	 *
+	 * @param email      the email
+	 * @param code 		 the code of event
+	 * @return true, if successful
+	 */
+
+	public boolean existsCheckinByEmailAndEvent(String email, String code) {
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+		CriteriaQuery<Boolean> query = criteriaBuilder.createQuery(Boolean.class);
+		
+		query.select(criteriaBuilder.literal(true));
+
+		Root<ParticipantModel> participant = query.from(ParticipantModel.class);
+
+		Predicate emailNamePredicate = criteriaBuilder.equal(participant.get("email"), email);
+		Predicate eventPredicate = criteriaBuilder.equal(participant.get("code_event"), code);
+
+		query.where(emailNamePredicate, eventPredicate);
+
+		TypedQuery<Boolean> typedQuery = entityManager.createQuery(query);
+
+		try {
+			return typedQuery.getSingleResult();
+		} catch (NoResultException exception) {
+			return false;
+		} catch (NonUniqueResultException exception) {
+			return true;
+		}
+	}
 }

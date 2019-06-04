@@ -42,19 +42,15 @@ De acordo com as configurações, o serviço será exposto na URL http://localho
 ```
 {
 	"email": "participante@email.com",
-	"macAddress": "C3-5B-28-43-C2-82",
-	"name": "Nome do participante",
-	"provider": "fornecedor"
+	"code_event": "CódigoDoEvento",
 }
 ```
 
-* Os campos _email_ e _macAddress_ são do tipo texto (String) e são obrigatórios.
+* Os campos _email_ e _code_event_ são do tipo texto (String) e são obrigatórios.
 
 #### Validações
 
-O serviço valida caso o mesmo Email já tenha sido informado.
-
-O serviço também valida caso o mesmo endereço MAC já tenha sido informado.
+O serviço valida caso o mesmo Email já tenha sido informado no evento.
 
 ## Licença
 
