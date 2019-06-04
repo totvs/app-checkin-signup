@@ -1,6 +1,5 @@
 package com.tjf.checkin.signup.repository;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,5 +39,9 @@ public class ParticipantModel {
     /** The Code of event. */
     @NotBlank(message = "{ParticipantModel.code_event.NotBlank}")
     private String code_event;
+    
+    /** Date */
+    @NotBlank(message = "{ParticipantModel.date.NotBlank}")
+    private String date;
 
 }
