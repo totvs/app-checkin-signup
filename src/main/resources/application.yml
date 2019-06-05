@@ -5,12 +5,11 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://10.0.75.2:5432/checkin
-    username: checkin
-    password: checkin!123
+    url: jdbc:postgresql://${databasesignup}
+    username: ${usernamesignup}
+    password: ${passwordsignup}
   
   jpa:
-    show-sql: true
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     hibernate:
@@ -20,10 +19,9 @@ spring:
       ddl-auto: update      
     properties:      
       hibernate:
-        format_sql: true
         jdbc:
           lob:
             non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
 
 server:
-  port: 8280
+  port: 8080
