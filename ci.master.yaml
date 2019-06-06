@@ -9,7 +9,7 @@ trigger:
 variables:
   registry: docker.totvs.io
   project: 'app-checkin'
-  imageName: 'checkin-signup'
+  imageName: 'signup'
   tagBuild: '$(Build.BuildNumber)'
   image: $(registry)/$(project)/$(imageName)
 
