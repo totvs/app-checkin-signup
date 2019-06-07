@@ -44,4 +44,9 @@ public class ParticipantModel {
     @NotBlank(message = "{ParticipantModel.date.NotBlank}")
     private String date;
 
+    @Override
+    public String toString() {
+    	return "/email=" + email + ",code_event=" + code_event + ",date=" + date;
+    }
+    
 }
