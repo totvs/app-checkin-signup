@@ -29,7 +29,7 @@ import com.totvs.tjf.core.validation.ValidatorService;
  */
 
 @RestController
-@RequestMapping(path = "/api/v1/checkin", produces = { APPLICATION_JSON_VALUE })
+@RequestMapping(path = "/api/v1/signup", produces = { APPLICATION_JSON_VALUE })
 @ApiGuideline(v1)
 public class SignupController {
 

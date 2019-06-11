@@ -37,7 +37,7 @@ Para subirmos o serviço, basta executar como Spring Boot App.
 
 #### Enviando para o Endpoint
 
-De acordo com as configurações, o serviço será exposto na URL http://localhost:8180/api/v1/checkin, sendo necessário enviar um POST, conforme exemplo a seguir:
+De acordo com as configurações, o serviço será exposto na URL http://localhost:8180/api/v1/signup, sendo necessário enviar um POST, conforme exemplo a seguir:
 
 ```
 {
