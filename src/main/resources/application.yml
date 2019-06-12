@@ -3,6 +3,11 @@ spring:
   application:
     name: checkin-signup-service
 
+  cloud:
+    kubernetes:
+      discovery:
+        enabled: false
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${databasesignup}
