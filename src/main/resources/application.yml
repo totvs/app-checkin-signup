@@ -5,8 +5,7 @@ spring:
 
   cloud:
     kubernetes:
-      discovery:
-        enabled: false
+      enabled: false
 
   datasource:
     driver-class-name: org.postgresql.Driver
